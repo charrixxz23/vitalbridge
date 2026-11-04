@@ -147,6 +147,6 @@ para diagnosticar ni tratar a nadie.
 
 ## Autor
 
-**Rafael Batista** · Ingeniería de Sistemas y Computación, Universidad Tecnológica de Panamá.
+**Richard Anthony Smith Alvarado** · Ingeniería de Sistemas y Computación, Universidad Tecnológica de Panamá.
 
 Licencia [MIT](LICENSE).
