@@ -1,0 +1,27 @@
+{
+  "name": "vitalbridge",
+  "version": "0.1.0",
+  "description": "Gateway store-and-forward de bajo costo para maletines de telemedicina: ESP32 + ECG + SpO2, dashboard en tiempo real y alertas que sobreviven a la falta de internet.",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "start": "node --no-warnings=ExperimentalWarning server/src/server.js",
+    "sim": "node simulator/simulate.js",
+    "demo": "node --no-warnings=ExperimentalWarning scripts/demo.js",
+    "test": "node --no-warnings=ExperimentalWarning --test \"server/test/*.test.js\" \"simulator/test/*.test.js\""
+  },
+  "keywords": [
+    "esp32",
+    "telemedicina",
+    "ecg",
+    "spo2",
+    "store-and-forward",
+    "fhir",
+    "ingenieria-biomedica",
+    "panama"
+  ],
+  "license": "MIT"
+}

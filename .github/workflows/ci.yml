@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    name: Servidor y simulador
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm test
+      - name: Prueba de punta a punta (servidor + simulador con corte de red)
+        run: |
+          PORT=8080 npm start &
+          sleep 2
+          node simulator/simulate.js --outage-at 3 --outage-for 15 --duration 25 --lose-acks 0.2
+          curl -sf localhost:8080/api/v1/stats | tee stats.json
+          node -e "const s=require('./stats.json'); if (s.records < 20 || s.backfilled < 5) process.exit(1)"
+
+  firmware:
+    name: Firmware ESP32
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.platformio/.cache
+          key: pio-${{ hashFiles('firmware/platformio.ini') }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install platformio
+      - run: pio run -d firmware

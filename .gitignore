@@ -1,0 +1,9 @@
+node_modules/
+data/
+*.db
+*.db-wal
+*.db-shm
+firmware/.pio/
+firmware/include/secrets.h
+.vscode/
+.DS_Store

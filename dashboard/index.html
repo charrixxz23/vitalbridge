@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VitalBridge · Monitor</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M2 17h7l3-8 4 15 3-11 2 4h9' fill='none' stroke='%2334d399' stroke-width='3' stroke-linejoin='round'/></svg>">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M2 17h7l3-8 4 15 3-11 2 4h9"/></svg>
+      <div>
+        <h1>VitalBridge</h1>
+        <p>Gateway store-and-forward para maletines de telemedicina</p>
+      </div>
+    </div>
+    <div class="device-bar">
+      <label class="sr-only" for="device">Equipo</label>
+      <select id="device"><option>Esperando equipos…</option></select>
+      <span id="link" class="pill pill-idle" role="status">—</span>
+    </div>
+  </header>
+
+  <div id="demo-bar" class="demo-bar" hidden>
+    <span class="demo-chip">Modo demo · todo se simula en tu navegador</span>
+    <span id="net-hint" class="muted"></span>
+    <span class="demo-actions">
+      <button id="net-toggle" type="button">Cortar red</button>
+      <button id="net-auto" type="button" class="ghost" hidden>Volver a automático</button>
+    </span>
+  </div>
+
+  <div id="sync-banner" class="banner" hidden></div>
+
+  <main class="grid">
+    <section class="card ecg-card" aria-label="Electrocardiograma">
+      <div class="card-head">
+        <h2>ECG <span class="muted">· derivación I · 25 mm/s</span></h2>
+        <span id="patient" class="muted"></span>
+      </div>
+      <div class="ecg-wrap">
+        <canvas id="ecg"></canvas>
+        <div id="ecg-overlay" class="ecg-overlay" hidden></div>
+      </div>
+    </section>
+
+    <section class="vitals" aria-label="Signos vitales">
+      <div class="vital" id="v-hr" data-tone="hr">
+        <span class="v-label">FC</span>
+        <span class="v-value"><b>--</b><small>lpm</small></span>
+        <span class="v-meta">Rango 50–120</span>
+      </div>
+      <div class="vital" id="v-spo2" data-tone="spo2">
+        <span class="v-label">SpO₂</span>
+        <span class="v-value"><b>--</b><small>%</small></span>
+        <span class="v-meta">Alarma &lt; 90</span>
+      </div>
+      <div class="vital" id="v-temp" data-tone="temp">
+        <span class="v-label">Temp</span>
+        <span class="v-value"><b>--</b><small>°C</small></span>
+        <span class="v-meta">Alarma ≥ 38.0</span>
+      </div>
+    </section>
+
+    <section class="card trend-card" aria-label="Tendencia">
+      <div class="card-head">
+        <h2>Tendencia <span class="muted">· últimos 10 min</span></h2>
+        <div class="legend">
+          <span><i class="sw sw-hr"></i>FC</span>
+          <span><i class="sw sw-spo2"></i>SpO₂</span>
+          <span><i class="sw sw-late"></i>Recuperado de la cola</span>
+        </div>
+      </div>
+      <canvas id="trend"></canvas>
+    </section>
+
+    <section class="card alerts-card" aria-label="Alertas">
+      <div class="card-head">
+        <h2>Alertas</h2>
+        <span id="alert-count" class="muted"></span>
+      </div>
+      <ol id="alerts" class="alerts"><li class="empty">Sin alertas.</li></ol>
+    </section>
+  </main>
+
+  <footer class="stats">
+    <div><b id="s-records">0</b><span>registros</span></div>
+    <div><b id="s-backfilled">0</b><span>llegaron tarde (cola)</span></div>
+    <div><b id="s-retro">0</b><span>alertas retroactivas</span></div>
+    <div><b id="s-queue">0</b><span>en cola del equipo</span></div>
+    <a id="fhir" href="#" target="_blank" rel="noopener">Exportar FHIR R4 ↗</a>
+  </footer>
+
+  <p class="disclaimer">Prototipo académico. No es un dispositivo médico certificado y no debe usarse para decisiones clínicas.</p>
+
+  <script src="app.js" type="module"></script>
+</body>
+</html>
